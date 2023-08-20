@@ -20,5 +20,19 @@ module "EC2_module" {
 }
 
 locals {
-    env="${terraform.workspace}"
+  env = "${terraform.workspace}"
+
+  amiid_env = {
+    default    = "amiid_default"
+    staging    = "amiid_staging"
+    production = "amiid_production"
+  }
+
+  amiid_default = "${lookup(local.amiid_env, local.env)}"
+}
+
+
+output "envspecificoutput_variable" {
+    value = local.amiid_default
+  
 }
